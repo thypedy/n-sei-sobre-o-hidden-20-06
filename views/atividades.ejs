@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atividades</title>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+        <!-- icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/estilos.css">
+    <!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="logoff" onclick="window.location.href='/login'">
+            <i class="bi bi-power"></i></div>
+        <h1 class="text-center">Lista de Atividade</h1>
+        <h2 class="text-center">
+            <%=nome%>
+        </h2>
+        <a href="/login" class="bi bi-arrow-left-circle btn btn-outline-dark"></a>
+        <button id="btn-change" class="btn btn-outline-dark">
+        <i class="bi bi-palette "></i>  Change Theme</button>
+        <div class="row">
+            <div class="col-sm order-2">
+                <h3 class="text-center">Cadastrar</h3>
+                <form action="/atividades" method="post" class="form-control">
+                    <input type="hidden" name="id" value="<%=id%>">
+                    <input type="hidden" name="nome" value="<%=nome%>">
+
+                    <label for="nome" class="form-control bg-dark text-bg-primary">Titulo da Atividade</label>
+                    <input type="text" name="titulo" class="form-control" placeholder="Título">
+
+                    <label for="data" class="form-control bg-dark text-bg-primary">Data de entrega:</label>
+                    <input type="date" name="data" class="form-control">
+
+                    <label for="disciplina" class="form-control bg-dark text-bg-primary">Disciplina:</label>
+                    <select name="disciplina" class="form-control">
+                        <option value="0">Selecione...</option>
+                        <option value="bio">Biologia</option>
+                        <option value="lp2">Linguagem de Programação</option>
+                        <option value="bd2">Banco de dados</option>
+                        <option value="inw">Internet Web</option>
+                    </select>
+
+                    <label for="tipo" class="form-control bg-dark text-bg-primary">Tipo:</label>
+                    <select name="tipo" class="form-control">
+                        <option value="0">Selecione...</option>
+                        <option value="ac">AC</option>
+                        <option value="at">AT</option>
+                        <option value="rec">REC</option>
+                        <option value="exame">exame</option>
+                    </select>
+
+                    <label for="" class="form-control bg-dark text-bg-primary">Formato de Entrega</label>
+                    <div>
+                        <input type="radio" name="entrega" value="Teams" class="form-check-input" value=""
+                            required>Tafera No
+                        Teams
+                        <input type="radio" name="entrega" value="Chat" class="form-check-input" value="" required>Chat
+                        No Teams
+                        <input type="radio" name="entrega" value="Formulario" class="form-check-input" required>Forms
+                        <input type="radio" name="entrega" value="Email" class="form-check-input" required>Email
+                        <input type="radio" name="entrega" value="Apresentacao" class="form-check-input"
+                            required>Apresentação
+                    </div>
+
+                    <label class="form-control bg-dark text-bg-primary">Orientações</label>
+                    <textarea name="orientacoes" id="" cols="30" rows="10" class="form-control"></textarea>
+                    <input type="submit" value="Gravar" class="form-control btn btn-dark">
+                </form>
+            </div>
+            <div class="col-md order-1">
+                <h3 class="text-center">Listar</h3>
+                <div class="listar">
+                    <div class="accordion" id="accordionExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    Em aberto (<%=dadosAberto.length%>)
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                                data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <% for(let n=0;n < dadosAberto.length;n++){%>
+                                        <div class="card">
+                                            <div class="card-header bg-gradient-sopa">
+                                                Data de entrega:
+                                                <%=dadosAberto[n].data.getDate()+1%>/
+                                                    <%=dadosAberto[n].data.getMonth()+1%>/
+                                                        <%=dadosAberto[n].data.getFullYear()%>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="card-title">
+                                                    Titulo: <%=dadosAberto[n].titulo%>
+                                                </div>
+                                                <div class="card-subtitle">
+                                                    Entrega: <%=dadosAberto[n].entrega%>
+                                                </div>
+                                                <div class="card-subtitle">
+                                                    Disciplina: <%=dadosAberto[n].disciplina%>
+                                                </div>
+                                                <div class="card-subtitle">
+                                                    <%=dadosAberto[n].tipo%>
+                                                </div>
+                                                <div class="card-text">
+                                                    <%=dadosAberto[n].instrucoes%>
+                                                </div>
+                                                <div class="card-text">
+                                                    <%=dadosAberto[n].status%>
+                                                </div>
+                                            </div>
+                                            <div class="card-footer">
+                                                <div class="input-group"">
+                                            <a href=" /entregue?id=<%=dadosAberto[n].id%>" id="btn-entregue" class="btn
+                                                    btn-success form-control">  <i class="bi bi-bookmark-check"></i>  Entregue</a>
+
+                                                    <a href="/alterar?id=<%=dadosAberto[n].id%>"
+                                                        class="btn btn-warning form-control"><i class="bi bi-bookmark-check"></i>  Alterar</a>
+
+                                                    <a href="/excluir?id=<%=dadosAberto[n].id%>" class="btn btn-danger form-control"><i class="bi bi-bookmark-check"></i>  Excluir</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <%}%>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingTwo">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    Entregues (<%=dadosEntregue.length%>)
+                                </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                                data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <% for(let n=0;n < dadosEntregue.length;n++){%>
+                                        <div class="card">
+                                            <div class="card-header text-bg-success">
+                                                Data de entrega:
+                                                <%=dadosEntregue[n].data.getDate()+1%>/
+                                                    <%=dadosEntregue[n].data.getMonth()+1%>/
+                                                        <%=dadosEntregue[n].data.getFullYear()%>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="card-title">
+                                                    Titulo: <%=dadosEntregue[n].titulo%>
+                                                </div>
+                                                <div class="card-subtitle">
+                                                    Entrega: <%=dadosEntregue[n].entrega%>
+                                                </div>
+                                                <div class="card-subtitle">
+                                                    Disciplina: <%=dadosEntregue[n].disciplina%>
+                                                </div>
+                                                <div class="card-subtitle">
+                                                    <%=dadosEntregue[n].tipo%>
+                                                </div>
+                                                <div class="card-text">
+                                                    <%=dadosEntregue[n].instrucoes%>
+                                                </div>
+                                                <div class="card-text">
+                                                    <%=dadosEntregue[n].status%>
+                                                </div>
+                                            </div>
+                                            <div class="card-footer">
+                                                <div class="input-group"">
+                                                    <a href="/desfazer?id=<%=dadosEntregue[n].id%>"
+                                                        class="btn btn-info form-control">Desfazer</a>
+                                                        <a href="/excluir?id=<%=dadosEntregue[n].id%>"
+                                                            class="btn btn-danger form-control">Excluir</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <%}%>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingThree">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    Excluídos (<%=dadosExcluido.length%>)
+                                </button>
+                            </h2>
+                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                                data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <% for(let n=0;n < dadosExcluido.length;n++){%>
+                                        <div class="card">
+                                            <div class="card-header text-bg-danger ">
+                                                Data de entrega:
+                                                <%=dadosExcluido[n].data.getDate()+1%>/
+                                                    <%=dadosExcluido[n].data.getMonth()+1%>/
+                                                        <%=dadosExcluido[n].data.getFullYear()%>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="card-title">
+                                                    Titulo: <%=dadosExcluido[n].titulo%>
+                                                </div>
+                                                <div class="card-subtitle">
+                                                    Entrega: <%=dadosExcluido[n].entrega%>
+                                                </div>
+                                                <div class="card-subtitle">
+                                                    Disciplina: <%=dadosExcluido[n].disciplina%>
+                                                </div>
+                                                <div class="card-subtitle">
+                                                    <%=dadosExcluido[n].tipo%>
+                                                </div>
+                                                <div class="card-text">
+                                                    <%=dadosExcluido[n].instrucoes%>
+                                                </div>
+                                                <div class="card-text">
+                                                    <%=dadosExcluido[n].status%>
+                                                </div>
+                                            </div>
+                                            <div class="card-footer">
+                                                <div class="input-group"">
+                                            <a href="/desfazer?id=<%=dadosExcluido[n].id%>" class="btn btn-info form-control">Desfazer</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <%}%>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/theme.js"></script>
+</body>
+
+</html>
